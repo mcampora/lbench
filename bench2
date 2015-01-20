@@ -1,0 +1,19 @@
+#!/usr/local/bin/python3
+
+import timeit
+import sys
+
+if __name__ == "__main__":
+	elapsed = []
+	iterations = 1000
+	
+	if len(sys.argv) != 2:
+		print("Syntax: bench <program>")
+		exit(1)
+
+	elapsed = timeit.repeat('os.system("' +
+				sys.argv[1] + ' ' + str(iterations) + ' > /dev/null")',
+				setup="import os", repeat=1, number=1)
+
+	print("{} execute en {:.4f}s".format(sys.argv[1],max(elapsed)/iterations))
+
