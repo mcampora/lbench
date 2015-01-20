@@ -5,6 +5,5 @@ import random
 if __name__ == "__main__":
 	tab = list(range(1000));
 	random.shuffle(tab)
-
 	print(tab)
 
