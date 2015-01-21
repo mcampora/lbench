@@ -1,13 +1,16 @@
 function bubblesort(tab) {
+	//var c = 0;
 	for (i = 0; i < tab.length - 1; i++) {
 		for (j = i + 1; j < tab.length; j++) {
 			if (tab[i] > tab[j]) {
 				var aux = tab[j];
 				tab[j] = tab[i];
 				tab[i] = aux;
+				//c++;
 			}
 		}
 	} 
+	//console.log(c);
 }
 
 var rep = 1;

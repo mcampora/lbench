@@ -8,13 +8,18 @@
 SRC=src
 BIN=bin
 
-all: $(BIN)/CTest $(BIN)/CTestO $(BIN)/GTest $(BIN)/JTest.class
+all: ctest $(BIN)/CTestO $(BIN)/GTest $(BIN)/JTest.class
 
 # c program
+ctest: $(BIN)/CTest $(BIN)/CTestO $(BIN)/CTestO3 $(BIN)/CTestO3m
 $(BIN)/CTest: $(SRC)/CTest.c
 	gcc $(SRC)/CTest.c -o $(BIN)/CTest
 $(BIN)/CTestO: $(SRC)/CTest.c
 	gcc $(SRC)/CTest.c -O -o $(BIN)/CTestO
+$(BIN)/CTestO3: $(SRC)/CTest.c
+	gcc $(SRC)/CTest.c -O3 -o $(BIN)/CTestO3
+$(BIN)/CTestO3m: $(SRC)/CTest.c
+	gcc $(SRC)/CTest.c -march=native -O3 -o $(BIN)/CTestO3m
 
 # java program
 $(BIN)/JTest.class: $(SRC)/JTest.java
@@ -25,22 +30,28 @@ $(BIN)/GTest: $(SRC)/GTest.go
 	go build -o $(BIN)/GTest $(SRC)/GTest.go
 
 clean:
-	rm $(BIN)/CTest $(BIN)/CTestO $(BIN)/JTest.class $(BIN)/GTest
+	rm $(BIN)/*
 
 # bench, the process is launched 1000 times
-b1:
+b1: all
 	@bench $(BIN)/CTest
 	@bench $(BIN)/CTestO
+	@bench $(BIN)/CTestO3
+	@bench $(BIN)/CTestO3m
 	@bench "java -cp $(BIN) JTest"
 	@bench $(BIN)/GTest
-	@bench "python3 $(SRC)/PTest.py"
 	@bench "pypy3 $(SRC)/PTest.py"
+	@bench "node $(SRC)/JSTest.js"
+	@bench "python3 $(SRC)/PTest.py"
 
 # bench 2, the process is launched once and runs the algorithm 1000 times
-b2:
+b2: all
 	@bench2 $(BIN)/CTest
 	@bench2 $(BIN)/CTestO
+	@bench2 $(BIN)/CTestO3
+	@bench2 $(BIN)/CTestO3m
 	@bench2 "java -cp $(BIN) JTest"
 	@bench2 $(BIN)/GTest
-	@bench2 "python3 $(SRC)/PTest.py"
 	@bench2 "pypy3 $(SRC)/PTest.py"
+	@bench2 "node $(SRC)/JSTest.js"
+	@bench2 "python3 $(SRC)/PTest.py"
