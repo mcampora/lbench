@@ -2,6 +2,7 @@
 
 import timeit
 import sys
+import os
 
 if __name__ == "__main__":
 	elapsed = []
