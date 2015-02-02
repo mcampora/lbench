@@ -3,9 +3,12 @@ import sys
 def bubblesort(tab):
 	#c = 0
 	n = len(tab)
-	for i in range(0, n - 1):
+	for i in range(n - 1):
 		for j in range(i + 1, n):
 			if tab[i] > tab[j]:
+				#aux = tab[i]
+				#tab[i] = tab[j]
+				#tab[j] = aux
 				tab[i],tab[j] = tab[j],tab[i]
 				#c = c + 1
 	#print(c)
